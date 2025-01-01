@@ -17,8 +17,8 @@
     <string name="update">Update</string>
 
     <string-array name="priority">
-        <item>High</item>
-        <item>Medium</item>
-        <item>Low</item>
+        <item>HIGH</item>
+        <item>MEDIUM</item>
+        <item>LOW</item>
     </string-array>
 </resources>

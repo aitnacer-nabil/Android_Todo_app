@@ -12,9 +12,11 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import com.example.todo.R
 import com.example.todo.databinding.FragmentUpdateBinding
+import com.example.todo.viewmodels.MainViewModel
 
 
 @Suppress("DEPRECATION")
@@ -22,6 +24,7 @@ class UpdateFragment : Fragment() {
 
     private var _binding: FragmentUpdateBinding? = null
     private val binding get() = _binding!!
+    private val mainViewModel: MainViewModel by activityViewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
