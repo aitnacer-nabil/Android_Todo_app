@@ -12,7 +12,9 @@ import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.todo.R
 import com.example.todo.databinding.FragmentListBinding
 import com.example.todo.viewmodels.MainViewModel
@@ -23,6 +25,7 @@ class ListFragment : Fragment() {
     private var _binding: FragmentListBinding? = null
     private val binding get() = _binding!!
     private val mainViewModel: MainViewModel by activityViewModels()
+    private val listAdapter: ListAdapter by lazy { ListAdapter() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,23 +48,30 @@ class ListFragment : Fragment() {
         binding.navigationList.setOnClickListener {
             findNavController().navigate(R.id.action_listFragment_to_updateFragment)
         }
+        binding.recyclerView.adapter = listAdapter
+        binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
+        mainViewModel.getAllData.observe(viewLifecycleOwner, Observer { data ->
+            listAdapter.setData(data)
+             
+        })
 
         //Set Menu
         val menuHost: MenuHost = requireActivity()
-        menuHost.addMenuProvider(object : MenuProvider{
+        menuHost.addMenuProvider(object : MenuProvider {
 
             override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
                 menuInflater.inflate(R.menu.menu_list, menu)
             }
 
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
-               return when(menuItem.itemId){
-                   R.id.group_sort -> {
-                       //Do Something
-                       true
-                   }
-                   else -> false
-               }
+                return when (menuItem.itemId) {
+                    R.id.group_sort -> {
+                        //Do Something
+                        true
+                    }
+
+                    else -> false
+                }
             }
 
         }, viewLifecycleOwner, Lifecycle.State.RESUMED)
