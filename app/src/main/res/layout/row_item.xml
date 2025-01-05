@@ -9,12 +9,12 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/row_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="4dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/row_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"

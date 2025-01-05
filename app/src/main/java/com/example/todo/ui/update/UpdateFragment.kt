@@ -14,7 +14,9 @@ import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
+import androidx.navigation.fragment.navArgs
 import com.example.todo.R
+import com.example.todo.data.models.Priority
 import com.example.todo.databinding.FragmentUpdateBinding
 import com.example.todo.viewmodels.MainViewModel
 
@@ -25,6 +27,8 @@ class UpdateFragment : Fragment() {
     private var _binding: FragmentUpdateBinding? = null
     private val binding get() = _binding!!
     private val mainViewModel: MainViewModel by activityViewModels()
+    private val args by navArgs<UpdateFragmentArgs>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -39,6 +43,11 @@ class UpdateFragment : Fragment() {
         // Inflate the layout for this fragment
         _binding = FragmentUpdateBinding.inflate(inflater, container, false)
         val root: View = binding.root
+        binding.currentEditTextText.setText(args.currentTodo.title)
+        binding.currentEditTextMultipleLine.setText(args.currentTodo.description)
+        binding.currentSpinner.setSelection(parsePriority(args.currentTodo.priority))
+        binding.currentSpinner.onItemSelectedListener = mainViewModel.listener
+
 
         //Set Menu Host
         val menuHost: MenuHost = requireActivity()
@@ -65,6 +74,16 @@ class UpdateFragment : Fragment() {
 
         return root
 
+    }
+
+    fun parsePriority(priority: Priority): Int {
+        return when(priority){
+           Priority.HIGH -> 0
+            Priority.MEDIUM -> 1
+            Priority.LOW -> 2
+
+
+        }
     }
 
 
